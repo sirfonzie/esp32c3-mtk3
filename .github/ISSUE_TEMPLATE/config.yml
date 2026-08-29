@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question about the port
+    url: https://github.com/sirfonzie/esp32c3-mtk3/discussions
+    about: For usage questions and general discussion, rather than a defect report.
+  - name: micro T-Kernel 3.0 specification
+    url: https://tron-forum.github.io/mtkernel_3/
+    about: For questions about the kernel API itself, as opposed to this ESP32-C3 port.

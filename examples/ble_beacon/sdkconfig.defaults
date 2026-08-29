@@ -1,0 +1,33 @@
+# Kernel + BLE (NimBLE)
+# Auto-loaded by IDF for this example: idf.py -C examples/ble_beacon build
+CONFIG_IDF_TARGET="esp32c3"
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=4096
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+# CONFIG_ESP_CONSOLE_UART_DEFAULT is not set
+CONFIG_ESP_CONSOLE_SECONDARY_NONE=y
+
+CONFIG_MTK3_KERNEL_BLE=y
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+CONFIG_BT_CONTROLLER_ENABLED=y
+# CONFIG_BT_BLUEDROID_ENABLED is not set  (NimBLE-only saves ~60 KB vs dual-mode)
+CONFIG_BT_NIMBLE_MAX_CONNECTIONS=3
+CONFIG_BT_NIMBLE_ROLE_PERIPHERAL=y
+CONFIG_BT_NIMBLE_ROLE_OBSERVER=y
+CONFIG_BT_NIMBLE_ROLE_BROADCASTER=y
+CONFIG_BT_NIMBLE_ROLE_CENTRAL=y
+CONFIG_BT_NIMBLE_PINNED_TO_CORE=0
+CONFIG_BT_NIMBLE_HOST_TASK_STACK_SIZE=4096
+
+# Hardware CCA required: without it, ke_event type 6 has a NULL callback in
+# the ROM's ke_event_env table, causing a jalr-to-zero crash at startup.
+CONFIG_BT_BLE_CCA_MODE_HW=y
+CONFIG_BT_BLE_CCA_MODE=1
+
+# The port cannot arm the Task-WDT: IDF initializes it in
+# esp_startup_start_app() (wrapped away) and feeds it from the FreeRTOS idle
+# task (which does not exist here).  State that honestly instead of building
+# with a watchdog config that is silently inert.  The INT-WDT *is* armed and
+# fed by the kernel (see kernel/sysdepend/.../interrupt.c).
+CONFIG_ESP_TASK_WDT_EN=n

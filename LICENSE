@@ -1,0 +1,28 @@
+This repository combines source under more than one licence, so there is no
+single licence text that covers all of it. The full texts are in LICENSES/,
+and the mapping from each part of the repository to its licence is in the
+"Licensing" section at the bottom of README.md.
+
+In summary:
+
+  kernel/, include/, lib/, device/, config/
+      micro T-Kernel 3.0
+      Copyright (C) 2006-2023 by Ken Sakamura
+      Released by TRON Forum (http://www.tron.org)
+      T-License 2.2  ->  LICENSES/T-License-2.2_TEF000-219-200401.pdf
+
+  components/, main/, examples/
+      ESP32-C3 port work, board support, the FreeRTOS compatibility layer,
+      and the example applications.
+      Apache-2.0  ->  LICENSES/Apache-2.0.txt
+
+  components/freertos/linker.lf
+  components/freertos/linker_common.lf
+      Verbatim copies of ESP-IDF's linker fragments.
+      Copyright (C) Espressif Systems (Shanghai) CO LTD.
+      Apache-2.0  ->  LICENSES/ESP-IDF_LICENSE.txt
+
+Nothing here is relicensed. Upstream copyright headers are left intact in
+every file; where this summary and a file header disagree, the file header
+governs. See README.md for the note on files that still carry T-License 2.1
+headers, and for the build dependencies that are not redistributed here.

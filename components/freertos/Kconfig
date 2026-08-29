@@ -1,0 +1,3 @@
+# Forwards to IDF's freertos Kconfig so all CONFIG_FREERTOS_* symbols are
+# present even though this local shadow component overrides the built-in.
+osource "$IDF_PATH/components/freertos/Kconfig"

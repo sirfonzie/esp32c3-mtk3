@@ -1,0 +1,57 @@
+menu "µT-Kernel 3.0 Feature Set"
+
+choice MTK3_FEATURE_SET
+    prompt "Feature set"
+    default MTK3_KERNEL_ONLY
+    help
+        Select which feature set to compile. Each option adds stack components
+        on top of the µT-Kernel core. Load the matching sdkconfig defaults
+        file when first configuring a new build:
+
+          Kernel only      : idf.py build
+          Kernel + WiFi    : idf.py -DSDKCONFIG_DEFAULTS="sdkconfig.defaults.wifi" build
+          Kernel + BLE     : idf.py -DSDKCONFIG_DEFAULTS="sdkconfig.defaults.ble" build
+          Kernel + WiFi+BLE: idf.py -DSDKCONFIG_DEFAULTS="sdkconfig.defaults.wifi_ble" build
+
+config MTK3_KERNEL_ONLY
+    bool "Kernel only"
+    help
+        Minimal build: µT-Kernel scheduler, IPC primitives, cyclic handlers,
+        timers, and device drivers (serial, ADC, I2C). Smallest flash
+        footprint (~300 KB).
+
+config MTK3_KERNEL_WIFI
+    bool "Kernel + WiFi"
+    help
+        Adds WiFi (esp_wifi), lwIP TCP/IP stack, esp_netif, and ESP-MESH.
+        Requires sdkconfig.defaults.wifi for IDF-level defaults.
+
+config MTK3_KERNEL_BLE
+    bool "Kernel + BLE (NimBLE)"
+    help
+        Adds Bluetooth Low Energy via the NimBLE host stack (peripheral,
+        central, observer, and broadcaster roles). Requires
+        sdkconfig.defaults.ble for IDF-level defaults.
+
+config MTK3_KERNEL_WIFI_BLE
+    bool "Kernel + WiFi + BLE [EXPERIMENTAL]"
+    help
+        Enables simultaneous WiFi and BLE with hardware coexistence (HW CCA).
+
+        WARNING: This combination is not yet fully stable. Occasional resets
+        may occur under heavy simultaneous WiFi + BLE traffic. Intended for
+        evaluation and development only — not recommended for production.
+
+        Requires sdkconfig.defaults.wifi_ble for IDF-level defaults.
+
+endchoice
+
+config MTK3_WIFI_ENABLED
+    bool
+    default y if MTK3_KERNEL_WIFI || MTK3_KERNEL_WIFI_BLE
+
+config MTK3_BLE_ENABLED
+    bool
+    default y if MTK3_KERNEL_BLE || MTK3_KERNEL_WIFI_BLE
+
+endmenu

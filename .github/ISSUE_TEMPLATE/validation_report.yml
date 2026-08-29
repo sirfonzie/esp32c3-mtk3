@@ -1,0 +1,66 @@
+name: Validation report
+description: You ran something on your own hardware - tell us what you saw, working or not
+labels: ["validation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the most useful kind of report this project can receive.
+
+        [docs/PORT_ESP32C3.md](../blob/main/docs/PORT_ESP32C3.md) lists features
+        that are **ported but not validated** - WiFi+BLE coexistence under load,
+        ESP-MESH, ESP-NOW, and long-run radio stability. Those gaps exist mainly
+        because they need a second board, a router, or days of runtime.
+
+        A result is valuable whether it worked or not. "Ran for six hours, no
+        resets" is a real data point.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: What did you exercise
+      options:
+        - WiFi + BLE concurrent (experimental)
+        - ESP-MESH (two boards)
+        - ESP-NOW (two boards)
+        - Long-run radio stability
+        - Kernel / scheduling
+        - A peripheral driver (UART, ADC, I2C, PWM)
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: setup
+    attributes:
+      label: Setup
+      description: Boards, example(s), build configuration, and anything else in the loop.
+      placeholder: |
+        Two ESP32-C3 Super Minis, ble_espmesh_root + ble_espmesh_demo,
+        router on a fixed channel 6, CONFIG_ESPMESH_CHANNEL=6.
+    validations:
+      required: true
+
+  - type: input
+    id: duration
+    attributes:
+      label: How long did it run
+      placeholder: "~6 hours"
+
+  - type: textarea
+    id: result
+    attributes:
+      label: What happened
+      description: >
+        What worked, what did not, and anything that surprised you. Paste any
+        relevant console output.
+    validations:
+      required: true
+
+  - type: input
+    id: idf-version
+    attributes:
+      label: ESP-IDF version
+      placeholder: "v6.1-dev-2300-g17a74c925c"
+    validations:
+      required: true

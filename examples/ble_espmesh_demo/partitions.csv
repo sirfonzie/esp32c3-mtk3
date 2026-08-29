@@ -1,0 +1,6 @@
+# Name,   Type, SubType, Offset,   Size
+# BLE controller + NimBLE + ESP-MESH + lwIP exceeds the default 1 MB app
+# partition; the C3 has 4 MB flash, so give the app ~2 MB.
+nvs,      data, nvs,     0x9000,   0x6000
+phy_init, data, phy,     0xf000,   0x1000
+factory,  app,  factory, 0x10000,  0x1F0000

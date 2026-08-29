@@ -1,0 +1,41 @@
+menu "MTK3 ESP-MESH"
+
+config ESPMESH_CHANNEL
+    int "Mesh WiFi channel"
+    default 6
+    range 1 13
+    help
+        All nodes in the mesh must use the same channel.  1/6/11 overlap
+        least with BLE advertising channels if BLE coexists later.
+
+config ESPMESH_MAX_LAYER
+    int "Max mesh layer (tree depth)"
+    default 2
+    range 1 25
+
+config ESPMESH_AP_PASSWORD
+    string "Mesh inter-node AP password"
+    default "mtk3mesh1"
+
+config ESPMESH_ROUTER_SSID
+    string "Upstream router SSID"
+    default "YOUR_ROUTER_SSID"
+    help
+        Set this to your own WiFi network before building the ESP-MESH
+        examples.  The root node associates to this router; a non-root node
+        must carry the same router config even when it reaches the network
+        only through its mesh parent.
+
+        Note ESPMESH_CHANNEL must match this router's actual WiFi channel -
+        the mesh child does not scan or switch channels.
+
+config ESPMESH_ROUTER_PASSWORD
+    string "Upstream router password"
+    default ""
+    help
+        Your router's WPA2 password.  Left empty by default so the value is
+        never carried in the repository; set it with
+        `idf.py -C examples/ble_espmesh_root menuconfig` under "MTK3 ESP-MESH",
+        or edit the example's sdkconfig.defaults locally.
+
+endmenu

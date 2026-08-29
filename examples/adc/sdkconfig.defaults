@@ -1,0 +1,16 @@
+CONFIG_IDF_TARGET="esp32c3"
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=4096
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# Route the primary console through USB-Serial-JTAG (the USB-C connector on
+# the Super Mini) so idf.py monitor's keystrokes reach the chip and esp_rom
+# console writes don't time out.
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+# CONFIG_ESP_CONSOLE_UART_DEFAULT is not set
+
+# The port cannot arm the Task-WDT: IDF initializes it in
+# esp_startup_start_app() (wrapped away) and feeds it from the FreeRTOS idle
+# task (which does not exist here).  State that honestly instead of building
+# with a watchdog config that is silently inert.  The INT-WDT *is* armed and
+# fed by the kernel (see kernel/sysdepend/.../interrupt.c).
+CONFIG_ESP_TASK_WDT_EN=n

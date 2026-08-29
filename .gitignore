@@ -1,0 +1,19 @@
+# ESP-IDF build output
+build/
+build_*/
+sdkconfig
+sdkconfig.old
+managed_components/
+dependencies.lock
+
+# Binaries
+*.bin
+*.elf
+*.map
+*.a
+*.o
+
+# Editor / OS cruft
+*~
+.DS_Store
+*:Zone.Identifier

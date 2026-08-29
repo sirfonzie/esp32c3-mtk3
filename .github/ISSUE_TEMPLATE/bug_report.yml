@@ -1,0 +1,86 @@
+name: Bug report
+description: Something crashed, hung, or behaved unexpectedly
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. Before filing, it is worth a
+        glance at [docs/PORT_ESP32C3.md](../blob/main/docs/PORT_ESP32C3.md) -
+        it lists what is validated, what is ported but not yet validated, and
+        what is not ported at all. If what you hit is already listed as not
+        ported, a report is still welcome, but that will explain the behaviour.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected, and what you got instead.
+      placeholder: |
+        Expected: the board to keep advertising.
+        Got: a reset after roughly two minutes.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: The exact commands you ran, including the build configuration.
+      placeholder: |
+        1. idf.py -DSDKCONFIG_DEFAULTS="sdkconfig.defaults.ble" build
+        2. idf.py -p /dev/ttyACM0 flash monitor
+        3. Connect with a phone scanner, wait ~2 min
+    validations:
+      required: true
+
+  - type: textarea
+    id: monitor
+    attributes:
+      label: Monitor output at the point of failure
+      description: >
+        Paste the output of `idf.py monitor` around the failure. A panic
+        backtrace is especially useful. This will be rendered as code, no
+        backticks needed.
+      render: text
+    validations:
+      required: true
+
+  - type: input
+    id: idf-version
+    attributes:
+      label: ESP-IDF version
+      description: Output of `idf.py --version`
+      placeholder: "v6.1-dev-2300-g17a74c925c"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: board
+    attributes:
+      label: Board
+      options:
+        - ESP32-C3 Super Mini (native USB-Serial-JTAG)
+        - M5StampC3 (CH9102 UART0)
+        - Other ESP32-C3 board
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feature-set
+    attributes:
+      label: Build configuration
+      options:
+        - Kernel only
+        - "+ WiFi"
+        - "+ BLE"
+        - "+ WiFi + BLE (experimental)"
+    validations:
+      required: true
+
+  - type: input
+    id: host
+    attributes:
+      label: Host OS
+      description: Note if you are on WSL2 - it has known USB-serial quirks.
+      placeholder: "Ubuntu 24.04 on WSL2"
